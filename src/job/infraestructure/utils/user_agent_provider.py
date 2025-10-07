@@ -2,19 +2,46 @@ import random
 
 
 class UserAgentProvider:
-    # Lista de user-agents comunes para rotar
+    """Proveedor de User-Agents para rotar peticiones HTTP
+
+    Esta clase permite simular diferentes navegadores y dispositivos al
+    realizar scraping o peticiones a APIs que aplican detección de bots.
+    Los users-agents puedes rotarse de manera aleatoria o secuencial.
+
+    Attrubutes:
+        USER_AGENTS (List[str]): Lista de user-agents
+        strategy (str): Estrategia de rotación de manera aleatoria o secuencial
+        index (int): Puntero usado en round-robin.
+    """
+
     USER_AGENTS = [
-        "Mozilla/5.0 (iPhone17,2; CPU iPhone OS 18_3_1 como Mac OS X) AppleWebKit/605.1.15 (KHTML, como Gecko) Mobile/15E148 Resorts/4.5.2",
-        "Mozilla/5.0 (iPhone16,2; CPU iPhone OS 17_5_1 como Mac OS X) AppleWebKit/605.1.15 (KHTML, como Gecko) Mobile/15E148 Resorts/4.7.5",
-        "Mozilla/5.0 (Linux; Android 15; SM-S931B Build/AP3A.240905.015.A2; wv) AppleWebKit/537.36 (KHTML, como Gecko) Versión/4.0 Chrome/127.0.6533.103 Safari móvil/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, como Gecko) Versión/18.3.1 Safari/605.1.15",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/140.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/140.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, como Gecko) Chrome/140.0.0.0 Safari/537.36",
     ]
+
     def __init__(self, strategy="random"):
+        """
+        Inicializa el proveedor de user-agents.
+
+        Args:
+            strategy (str): Estrategia de rotación.
+                - "random": selecciona un user-agent aleatorio.
+                - "round_robin": recorre la lista en orden secuencial.
+        """
         self.strategy = strategy
         self.index = 0
 
     def get(self):
+        """
+        Obtiene un user-agent según la estrategia configurada.
+
+        Returns:
+            str: Un user-agent válido de la lista.
+
+        Raises:
+            ValueError: Si la estrategia definida no es válida.
+        """
         if self.strategy == "random":
             return random.choice(self.USER_AGENTS)
         elif self.strategy == "round_robin":
