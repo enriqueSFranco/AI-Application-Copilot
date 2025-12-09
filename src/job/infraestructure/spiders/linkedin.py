@@ -4,7 +4,8 @@ import random
 from playwright.async_api import Page
 from selectolax.lexbor import LexborHTMLParser
 
-from job.domain.spider_port import BaseScraper, SpiderPort
+from config.config_service import ConfigService
+from job.domain.ports.spider_port import BaseScraper, SpiderPort
 from job.infraestructure.strategies.concrete_strategies.close_with_button import (
     CloseWithBotton,
 )
@@ -18,25 +19,27 @@ logger = logging.getLogger(__name__)
 class LinkedinScraper(BaseScraper, SpiderPort):
     def __init__(self):
         super().__init__()
+        linkedin_cofing = ConfigService.get_site_config("linkedin")
         self.button_strategy = CloseWithBotton()
         self.overlay_strategy = CloseWithOverlay()
-        self.selectors = {
-            "modal_overlay": [".modal__overlay[aria-hidden='false']"],
-            "modal_content": [
-                "section[aria-labelledby='base-contextual-sign-in-modal-modal-header']",
-                "section[aria-modal]",
-            ],
-            "modal_dismiss_btn": [
-                ".modal__dismiss",
-                "button[aria-label='Dismiss']",
-                "button[data-tracking-control-name='public_jobs_contextual-sign-in-modal_modal_dismiss']",
-            ],
-            "main_content": ["#main-content"],
-            "title": [".top-card-layout__title"],
-            "company": [
-                "a[data-tracking-control-name='public_jobs_topcard-org-name']",
-            ],
-        }
+        self.selectors = linkedin_cofing["selectors"]
+        # self.selectors = {
+        #     "modal_overlay": [".modal__overlay[aria-hidden='false']"],
+        #     "modal_content": [
+        #         "section[aria-labelledby='base-contextual-sign-in-modal-modal-header']",
+        #         "section[aria-modal]",
+        #     ],
+        #     "modal_dismiss_btn": [
+        #         ".modal__dismiss",
+        #         "button[aria-label='Dismiss']",
+        #         "button[data-tracking-control-name='public_jobs_contextual-sign-in-modal_modal_dismiss']",
+        #     ],
+        #     "main_content": ["#main-content"],
+        #     "title": [".top-card-layout__title"],
+        #     "company": [
+        #         "a[data-tracking-control-name='public_jobs_topcard-org-name']",
+        #     ],
+        # }
 
     async def _close_login_modal_action(self, page: Page):
         """Hook para cerrar la modal de LinkedIn si aparece."""
