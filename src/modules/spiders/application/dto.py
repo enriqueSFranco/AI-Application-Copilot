@@ -33,22 +33,3 @@ class ScrapedVacancyDTO(BaseModel):
         if isinstance(v, str):
             return normalize_salary(v)
         return v
-
-
-# ejemplo de response para el scraper
-# {
-#   "source_url": "https://...",
-#   "source_type": "occ|linkedin|manual|api",
-#   "title": "Frontend Developer",
-#   "company": "Empresa X",
-#   "location": "CDMX, MX",
-#   "description": "Texto HTML/markdown limpio o texto plano", <-- esto usar la ai
-#   "raw_html": "<html>...</html>",
-#   "salary": { "min": 1000.0, "max": 2000.0, "currency": "USD" },
-#   "skills": ["react","typescript","node"],
-#   "seniority": "mid",
-#   "job_type": "remote|hybrid|onsite",
-#   "contract_type": "full-time|part-time|contract",
-#   "posted_date": "2025-12-01T12:00:00Z",
-#   "extra": { "raw": { "whatever": "optional" } }   // libre para metadatos
-# }
