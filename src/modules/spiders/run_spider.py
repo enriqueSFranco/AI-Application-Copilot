@@ -5,7 +5,7 @@ from .infrastructure.occ import OccScraper
 
 async def main():
     urls = [
-        "https://www.occ.com.mx/empleos/de-desarrollador-jr/en-ciudad-de-mexico/?tm=7&jobid=20882233",
+        "url_de_la_vacante",
     ]
     scraper = OccScraper()
 
