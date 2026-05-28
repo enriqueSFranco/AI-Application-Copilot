@@ -1,7 +1,0 @@
-POST http://localhost:8000/scraper/run
-Content-Type: application/json
-
-{
-  "url": "https://www.occ.com.mx/empleos/de-desarrollador-jr/en-ciudad-de-mexico/?tm=7&jobid=20882233"
-}
-
